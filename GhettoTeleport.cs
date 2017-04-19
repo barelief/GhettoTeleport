@@ -73,49 +73,41 @@ public class GhettoTeleport : MonoBehaviour
         if (Input.GetKey("w"))
         {
             transform.Translate(Vector3.forward * Time.deltaTime * sensitivity);
-            Debug.Log("w key was pressed.");
         }
 
         if (Input.GetKey("s"))
         {
             transform.Translate(Vector3.back * Time.deltaTime * sensitivity);
-            Debug.Log("s key was released.");
         }
 
         if (Input.GetKey("a"))
         {
             transform.Translate(Vector3.left * Time.deltaTime * sensitivity);
-            Debug.Log("a key was pressed.");
         }
 
         if (Input.GetKey("d"))
         {
             transform.Translate(Vector3.right * Time.deltaTime * sensitivity);
-            Debug.Log("d key was released.");
         }
 
         if (Input.GetKey("r"))
         {
             transform.Translate(Vector3.up * Time.deltaTime * sensitivity);
-            Debug.Log("r key was pressed.");
         }
 
         if (Input.GetKey("f"))
         {
             transform.Translate(Vector3.down * Time.deltaTime * sensitivity);
-            Debug.Log("f key was released.");
         }
 
         if (Input.GetKey("q"))
         {
             transform.Rotate(Vector3.up * Time.deltaTime * sensitivity * 3, Space.World);
-            Debug.Log("q key was pressed.");
         }
 
         if (Input.GetKey("e"))
         {
             transform.Rotate(-Vector3.up * Time.deltaTime * sensitivity * 3, Space.World);
-            Debug.Log("e key was pressed.");
         }
 
         if (Input.GetKey("k"))
@@ -126,7 +118,7 @@ public class GhettoTeleport : MonoBehaviour
 
         if (Input.GetKey("l"))
         {
-            Debug.Log("Ghetto Teleport load from PlayerPrefs.");
+            Debug.Log("Ghetto Teleport loaded from PlayerPrefs.");
             loadPrefs();
         }
 
@@ -153,7 +145,7 @@ public class GhettoTeleport : MonoBehaviour
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
             sensitivity += .1f;
-            Debug.Log(sensitivity);
+            // Debug.Log(sensitivity);
         }
 
         if (Input.GetKey(KeyCode.KeypadMinus))
@@ -163,7 +155,7 @@ public class GhettoTeleport : MonoBehaviour
             else
                 sensitivity = 0.0f;
 
-            Debug.Log(sensitivity);
+            // Debug.Log(sensitivity);
         }
     }
 
