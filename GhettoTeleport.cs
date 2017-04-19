@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class GhettoTeleport : MonoBehaviour
 {
-
     private float sensitivity = 5.0f;
-
+    private bool isDisplayingSensitivity = false;
     // Use this for initialization
     void Start()
     {
-        loadPrefs();
+        // loadPrefs();
+        // Debug.Log(sensitivity);
     }
 
     void OnApplicationQuit()
     {
-            
+
     }
 
     void savePrefs()
@@ -108,13 +108,13 @@ public class GhettoTeleport : MonoBehaviour
 
         if (Input.GetKey("q"))
         {
-            transform.Rotate(Vector3.up * Time.deltaTime * sensitivity, Space.World);
+            transform.Rotate(Vector3.up * Time.deltaTime * sensitivity * 3, Space.World);
             Debug.Log("q key was pressed.");
         }
 
         if (Input.GetKey("e"))
         {
-            transform.Rotate(-Vector3.up * Time.deltaTime * sensitivity, Space.World);
+            transform.Rotate(-Vector3.up * Time.deltaTime * sensitivity * 3, Space.World);
             Debug.Log("e key was pressed.");
         }
 
@@ -130,6 +130,26 @@ public class GhettoTeleport : MonoBehaviour
             loadPrefs();
         }
 
+        if (Input.GetKey("0"))
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        if (Input.GetKey("8"))
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+
+        if (Input.GetKey("9"))
+        {
+            transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+
+        if (Input.GetKeyDown("p"))
+        {
+            isDisplayingSensitivity = !isDisplayingSensitivity;
+        }
+
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
             sensitivity += .1f;
@@ -142,8 +162,14 @@ public class GhettoTeleport : MonoBehaviour
                 sensitivity -= .1f;
             else
                 sensitivity = 0.0f;
-			
-			Debug.Log(sensitivity);
+
+            Debug.Log(sensitivity);
         }
+    }
+
+    void OnGUI()
+    {
+        if (isDisplayingSensitivity)
+            GUI.Label(new Rect(10, 40, 200, 100), "sensitivity: " + sensitivity);
     }
 }
