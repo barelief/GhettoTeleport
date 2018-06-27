@@ -5,16 +5,25 @@ using UnityEngine;
 
 public class GhettoTeleport : MonoBehaviour
 {
-    private float sensitivity = 5.0f;
+    private float sensitivity = 0.1f;
     private bool isDisplayingSensitivity = false;
+
+    [Tooltip("Name of the pref (each object should be different")]
+    [SerializeField]
+    private string prefName;
+	
+	[SerializeField]
+	private bool loadPreferencesOnLoad;
 
     // points to teleport to 
     public Transform[] positions;
     // Use this for initialization
     void Start()
     {
-        // loadPrefs();
+        // load saved prefs by default
+        if(loadPreferencesOnLoad) loadPrefs();
         // Debug.Log(sensitivity);
+        if (prefName == "") prefName = gameObject.name; //gameObject.name
     }
 
     void OnApplicationQuit()
@@ -25,23 +34,23 @@ public class GhettoTeleport : MonoBehaviour
     void savePrefs()
     {
         //transform
-        PlayerPrefs.SetFloat("ObjectPositionX", transform.position.x);
-        PlayerPrefs.SetFloat("ObjectPositionY", transform.position.y);
-        PlayerPrefs.SetFloat("ObjectPositionZ", transform.position.z);
+        PlayerPrefs.SetFloat(prefName+"ObjectPositionX", transform.position.x);
+        PlayerPrefs.SetFloat(prefName+"ObjectPositionY", transform.position.y);
+        PlayerPrefs.SetFloat(prefName+"ObjectPositionZ", transform.position.z);
 
 
         // scales
-        PlayerPrefs.SetFloat("ObjectScaleX", transform.localScale.x);
-        PlayerPrefs.SetFloat("ObjectScaleY", transform.localScale.y);
-        PlayerPrefs.SetFloat("ObjectScaleZ", transform.localScale.z);
+        PlayerPrefs.SetFloat(prefName+"ObjectScaleX", transform.localScale.x);
+        PlayerPrefs.SetFloat(prefName+"ObjectScaleY", transform.localScale.y);
+        PlayerPrefs.SetFloat(prefName+"ObjectScaleZ", transform.localScale.z);
 
 
         // rotation
-        PlayerPrefs.SetFloat("ObjectRotationX", transform.eulerAngles.x);
-        PlayerPrefs.SetFloat("ObjectRotationY", transform.eulerAngles.y);
-        PlayerPrefs.SetFloat("ObjectRotationZ", transform.eulerAngles.z);
+        PlayerPrefs.SetFloat(prefName+"ObjectRotationX", transform.eulerAngles.x);
+        PlayerPrefs.SetFloat(prefName+"ObjectRotationY", transform.eulerAngles.y);
+        PlayerPrefs.SetFloat(prefName+"ObjectRotationZ", transform.eulerAngles.z);
 
-        PlayerPrefs.SetFloat("ObjectSensitivity", sensitivity);
+        PlayerPrefs.SetFloat(prefName+"ObjectSensitivity", sensitivity);
     }
 
     void loadPrefs()
@@ -49,22 +58,22 @@ public class GhettoTeleport : MonoBehaviour
 
         //transform
         transform.position = new Vector3(
-        PlayerPrefs.GetFloat("ObjectPositionX"),
-        PlayerPrefs.GetFloat("ObjectPositionY"),
-        PlayerPrefs.GetFloat("ObjectPositionZ")
+        PlayerPrefs.GetFloat(prefName+"ObjectPositionX"),
+        PlayerPrefs.GetFloat(prefName+"ObjectPositionY"),
+        PlayerPrefs.GetFloat(prefName+"ObjectPositionZ")
         );
 
         //scale
         transform.localScale = new Vector3(
-        PlayerPrefs.GetFloat("ObjectScaleX"),
-        PlayerPrefs.GetFloat("ObjectScaleY"),
-        PlayerPrefs.GetFloat("ObjectScaleZ"));
+        PlayerPrefs.GetFloat(prefName+"ObjectScaleX"),
+        PlayerPrefs.GetFloat(prefName+"ObjectScaleY"),
+        PlayerPrefs.GetFloat(prefName+"ObjectScaleZ"));
 
         // rotation
         transform.eulerAngles = new Vector3(
-        PlayerPrefs.GetFloat("ObjectRotationX"),
-        PlayerPrefs.GetFloat("ObjectRotationY"),
-        PlayerPrefs.GetFloat("ObjectRotationZ")
+        PlayerPrefs.GetFloat(prefName+"ObjectRotationX"),
+        PlayerPrefs.GetFloat(prefName+"ObjectRotationY"),
+        PlayerPrefs.GetFloat(prefName+"ObjectRotationZ")
         );
 
         sensitivity = PlayerPrefs.GetFloat("ObjectSensitivity");
@@ -123,7 +132,7 @@ public class GhettoTeleport : MonoBehaviour
 
         if (Input.GetKey("k"))
         {
-            Debug.Log("Ghetto Teleport saved to PlayerPrefs.");
+            Debug.Log("Ghetto Teleport saved to PlayerPrefs. Object: "+prefName);
             savePrefs();
         }
 
