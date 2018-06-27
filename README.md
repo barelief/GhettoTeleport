@@ -14,3 +14,12 @@ p - display sensitivity
 8 - set rotation to 180
 9 - set rotation to 90
 ```
+
+if you have many Objects with this script, you can disable/enable Script from particular object this way:
+
+```
+public GameObject fooObject; // before Start()
+(...)
+GhettoTeleport temp = fooObject.GetComponent("GhettoTeleport") as GhettoTeleport;
+temp.enabled = false;
+```
