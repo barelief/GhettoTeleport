@@ -1,3 +1,4 @@
+// 0.1.0
 
 using System.Collections;
 using System.Collections.Generic;
@@ -5,23 +6,22 @@ using UnityEngine;
 
 public class GhettoTeleport : MonoBehaviour
 {
-    private float sensitivity = 0.1f;
+    private float sensitivity = .1f;
     private bool isDisplayingSensitivity = false;
 
     [Tooltip("Name of the pref (each object should be different")]
     [SerializeField]
     private string prefName;
-	
-	[SerializeField]
-	private bool loadPreferencesOnLoad;
 
+     [SerializeField]
+    private bool isLoadingPrefsAtStart;
     // points to teleport to 
     public Transform[] positions;
     // Use this for initialization
     void Start()
     {
         // load saved prefs by default
-        if(loadPreferencesOnLoad) loadPrefs();
+        if (isLoadingPrefsAtStart) loadPrefs();
         // Debug.Log(sensitivity);
         if (prefName == "") prefName = gameObject.name; //gameObject.name
     }
@@ -50,7 +50,7 @@ public class GhettoTeleport : MonoBehaviour
         PlayerPrefs.SetFloat(prefName+"ObjectRotationY", transform.eulerAngles.y);
         PlayerPrefs.SetFloat(prefName+"ObjectRotationZ", transform.eulerAngles.z);
 
-        PlayerPrefs.SetFloat(prefName+"ObjectSensitivity", sensitivity);
+        PlayerPrefs.SetFloat("ObjectSensitivity", sensitivity);
     }
 
     void loadPrefs()
@@ -132,11 +132,11 @@ public class GhettoTeleport : MonoBehaviour
 
         if (Input.GetKey("k"))
         {
-            Debug.Log("Ghetto Teleport saved to PlayerPrefs. Object: "+prefName);
+            Debug.Log("Ghetto Teleport saved to PlayerPrefs.");
             savePrefs();
         }
 
-        if (Input.GetKey("l"))
+        if (Input.GetKey("p"))
         {
             Debug.Log("Ghetto Teleport load from PlayerPrefs.");
             loadPrefs();
@@ -164,14 +164,14 @@ public class GhettoTeleport : MonoBehaviour
 
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
-            sensitivity += .1f;
+            sensitivity += .01f;
             Debug.Log(sensitivity);
         }
 
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
             if (sensitivity > 0.0f)
-                sensitivity -= .1f;
+                sensitivity -= .01f;
             else
                 sensitivity = 0.0f;
 
@@ -184,7 +184,43 @@ public class GhettoTeleport : MonoBehaviour
             if (Input.GetKey((i+1).ToString()))
                 transform.position = positions[i].position;
         }
-       
+
+        if (Input.GetKey(";"))
+        {
+            transform.localScale += new Vector3(sensitivity, 0, 0);
+            Debug.Log("; key: +scale X");
+        }
+
+        if (Input.GetKey("."))
+        {
+            transform.localScale -= new Vector3(sensitivity, 0, 0);
+            Debug.Log(". key: -scale X");
+        }
+
+        if (Input.GetKey(","))
+        {
+            transform.localScale += new Vector3(0, sensitivity, 0);
+            Debug.Log("; key: +scale Y");
+        }
+
+        if (Input.GetKey("/"))
+        {
+            transform.localScale -= new Vector3(0, sensitivity, 0);
+            Debug.Log(". key: -scale Y");
+        }
+
+        if (Input.GetKey("l"))
+        {
+            transform.localScale += new Vector3(0, 0, sensitivity);
+            Debug.Log("l key: +scale Z");
+        }
+
+        if (Input.GetKey("'"))
+        {
+            transform.localScale -= new Vector3(0, 0, sensitivity);
+            Debug.Log("' key: -scale Z");
+        }
+
     }
 
  
